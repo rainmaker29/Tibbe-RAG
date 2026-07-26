@@ -1,6 +1,6 @@
-# Tibbe-AG: From RAG to Agentic — Validating Islamic-Medicine Responses with LLM Agents
+# Tibbe-RAG: From RAG to Agentic — Validating Islamic-Medicine Responses with LLM Agents
 
-This repository accompanies the paper **"From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents"** (Tibbe-AG). It contains the curated Prophetic-medicine benchmark, the raw model generations for three inference settings, the multi-judge 3C3H evaluation outputs, qualitative examples, and documentation of the prompts and evaluation methodology.
+This repository accompanies the paper **"From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents"** (Tibbe-RAG). It contains the curated Prophetic-medicine benchmark, the raw model generations for three inference settings, the multi-judge 3C3H evaluation outputs, qualitative examples, and documentation of the prompts and evaluation methodology.
 
 - **Paper:** From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents
 - **arXiv:** [abs/2506.15911](https://arxiv.org/abs/2506.15911) · [PDF](https://arxiv.org/pdf/2506.15911) (cs.CL)
@@ -14,32 +14,32 @@ This repository accompanies the paper **"From RAG to Agentic: Validating Islamic
 
 ## Abstract
 
-Centuries-old Islamic medical texts like Avicenna's *Canon of Medicine* and the Prophetic *Tibb-e-Nabawi* encode a wealth of preventive care, nutrition, and holistic therapies, yet remain inaccessible to many and underutilized in modern AI systems. Existing language-model benchmarks focus narrowly on factual recall or user preference, leaving a gap in validating culturally grounded medical guidance at scale. We propose a unified evaluation pipeline, **Tibbe-AG**, that aligns 30 carefully curated Prophetic-medicine questions with human-verified remedies and compares three LLMs (LLaMA-3, Mistral-7B, Qwen2-7B) under three configurations: direct generation, retrieval-augmented generation, and a scientific self-critique filter. Each answer is then assessed by a secondary LLM serving as an agentic judge, yielding a single **3C3H** quality score. Retrieval improves factual accuracy by 13%, while the agentic prompt adds another 10% improvement through deeper mechanistic insight and safety considerations.
+Centuries-old Islamic medical texts like Avicenna's *Canon of Medicine* and the Prophetic *Tibb-e-Nabawi* encode a wealth of preventive care, nutrition, and holistic therapies, yet remain inaccessible to many and underutilized in modern AI systems. Existing language-model benchmarks focus narrowly on factual recall or user preference, leaving a gap in validating culturally grounded medical guidance at scale. We propose a unified evaluation pipeline, **Tibbe-RAG**, that aligns 30 carefully curated Prophetic-medicine questions with human-verified remedies and compares three LLMs (LLaMA-3, Mistral-7B, Qwen2-7B) under three configurations: direct generation, retrieval-augmented generation, and a scientific self-critique filter. Each answer is then assessed by a secondary LLM serving as an agentic judge, yielding a single **3C3H** quality score. Retrieval improves factual accuracy by 13%, while the agentic prompt adds another 10% improvement through deeper mechanistic insight and safety considerations.
 
 ---
 
-## The Tibbe-AG framework
+## The Tibbe-RAG framework
 
-Tibbe-AG is an agentic RAG pipeline grounded in classical Islamic medical knowledge (primarily *Tibb-e-Nabawi*). Given a health question `q`, it is evaluated under three inference settings:
+Tibbe-RAG is an agentic RAG pipeline grounded in classical Islamic medical knowledge (primarily *Tibb-e-Nabawi*). Given a health question `q`, it is evaluated under three inference settings:
 
 | Setting | Description | Formulation |
 | --- | --- | --- |
 | **(E1) Direct** | Base LLM answers from the query alone, with no external grounding. | `A_f = LLM0(q)` |
 | **(E2) RAG** | Prompt is augmented with top-k passages retrieved from the *Tibb-e-Nabawi* corpus. | `A_f = LLM0(q, R(q))` |
-| **(E3) Tibbe-AG (Agentic)** | Same retrieval as RAG, plus an explicit self-critique/validation prompt appended to refine the draft. | `A_f = LLM0(q, R(q), A0, q_val)` |
+| **(E3) Tibbe-RAG (Agentic)** | Same retrieval as RAG, plus an explicit self-critique/validation prompt appended to refine the draft. | `A_f = LLM0(q, R(q), A0, q_val)` |
 
 The agentic validation step directs the model to (i) fact-check each segment of the initial answer against the retrieved evidence, (ii) inject mechanistic context (e.g., ginger's effect on COX-2 pathways), and (iii) filter or flag unsafe recommendations (e.g., drug–herb interactions).
 
 **Retrieval:** a dense retriever (ChromaDB) embeds both query and corpus passages into a shared space and returns the top-k passages by cosine similarity.
 
-Only Tibbe-AG satisfies all four response-quality criteria from the paper (Table 1): cites authentic sources, provides actionable specifics, includes scientific validation, and includes clinical safety cues.
+Only Tibbe-RAG satisfies all four response-quality criteria from the paper (Table 1): cites authentic sources, provides actionable specifics, includes scientific validation, and includes clinical safety cues.
 
 ---
 
 ## Repository structure
 
 ```
-Tibbe-AG/
+Tibbe-RAG/
 ├── README.md
 ├── paper/
 │   └── Sayeed_etal_2025_TibbeAG_from_RAG_to_agentic_islamic_medicine_arXiv_2506.15911v2.pdf
@@ -109,15 +109,15 @@ The benchmark file (`prophetic_medicine_30_question_benchmark_with_sources.csv`)
 | --- | --- | --- | --- | --- | --- | --- |
 | **Qwen** | Direct | 0.44 | 0.48 | 0.43 | 0.44 | 0.45 |
 |  | RAG | 0.62 | 0.62 | 0.75 | 0.76 | 0.69 |
-|  | Tibbe-AG | 0.73 | 0.74 | 0.85 | 0.86 | **0.80** |
+|  | Tibbe-RAG | 0.73 | 0.74 | 0.85 | 0.86 | **0.80** |
 | **Mistral** | Direct | 0.48 | 0.53 | 0.45 | 0.46 | 0.48 |
 |  | RAG | 0.65 | 0.66 | 0.76 | 0.77 | 0.71 |
-|  | Tibbe-AG | 0.76 | 0.77 | 0.86 | 0.87 | **0.82** |
+|  | Tibbe-RAG | 0.76 | 0.77 | 0.86 | 0.87 | **0.82** |
 | **LLaMA-3** | Direct | 0.49 | 0.58 | 0.47 | 0.48 | 0.50 |
 |  | RAG | 0.67 | 0.70 | 0.78 | 0.79 | 0.73 |
-|  | Tibbe-AG | 0.77 | 0.79 | 0.88 | 0.89 | **0.83** |
+|  | Tibbe-RAG | 0.77 | 0.79 | 0.88 | 0.89 | **0.83** |
 
-Across all base models and judges, Tibbe-AG (Agentic) consistently outperforms both Direct inference and standard RAG. Additional per-cell scores are in [`data/3c3h_evaluations/`](data/3c3h_evaluations/); a fuller breakdown is in [`docs/tibbe_ag_results_summary_tables.md`](docs/tibbe_ag_results_summary_tables.md).
+Across all base models and judges, Tibbe-RAG (Agentic) consistently outperforms both Direct inference and standard RAG. Additional per-cell scores are in [`data/3c3h_evaluations/`](data/3c3h_evaluations/); a fuller breakdown is in [`docs/tibbe_ag_results_summary_tables.md`](docs/tibbe_ag_results_summary_tables.md).
 
 ---
 
@@ -160,7 +160,7 @@ Reference documentation: [Rethinking LLM Evaluation with 3C3H: AraGen Benchmark 
 
 ## Citation
 
-If you use this benchmark or the Tibbe-AG framework, please cite the paper:
+If you use this benchmark or the Tibbe-RAG framework, please cite the paper:
 
 ```bibtex
 @inproceedings{sayeed2025tibbeag,
