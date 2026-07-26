@@ -3,8 +3,8 @@
 This repository accompanies the paper **"From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents"** (Tibbe-AG). It contains the curated Prophetic-medicine benchmark, the raw model generations for three inference settings, the multi-judge 3C3H evaluation outputs, qualitative examples, and documentation of the prompts and evaluation methodology.
 
 - **Paper:** From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents
-- **arXiv:** [2506.15911v2](https://arxiv.org/abs/2506.15911) (cs.CL)
-- **Venue:** 4th Muslims in Machine Learning (MusIML) Workshop, ICML 2025, Vancouver, Canada
+- **arXiv:** [abs/2506.15911](https://arxiv.org/abs/2506.15911) · [PDF](https://arxiv.org/pdf/2506.15911) (cs.CL)
+- **Venue:** Accepted at the **4th Muslims in Machine Learning (MusIML) Workshop**, co-located with the **42nd International Conference on Machine Learning (ICML 2025)**, Vancouver Convention Centre, Vancouver, Canada (July 2025).
 - **Authors:** Mohammad Amaan Sayeed\*, Mohammed Talha Alam\*, Raza Imam, Shahab Saquib Sohail, Amir Hussain (\*equal contribution)
 - **Affiliations:** Mohamed bin Zayed University of Artificial Intelligence (MBZUAI), UAE · VIT Bhopal University, India · Edinburgh Napier University, UK
 
@@ -166,12 +166,13 @@ If you use this benchmark or the Tibbe-AG framework, please cite the paper:
 @inproceedings{sayeed2025tibbeag,
   title     = {From RAG to Agentic: Validating Islamic-Medicine Responses with LLM Agents},
   author    = {Sayeed, Mohammad Amaan and Alam, Mohammed Talha and Imam, Raza and Sohail, Shahab Saquib and Hussain, Amir},
-  booktitle = {4th Muslims in Machine Learning (MusIML) Workshop, International Conference on Machine Learning (ICML)},
+  booktitle = {4th Muslims in Machine Learning (MusIML) Workshop, 42nd International Conference on Machine Learning (ICML)},
   year      = {2025},
   address   = {Vancouver, Canada},
   eprint    = {2506.15911},
   archivePrefix = {arXiv},
-  primaryClass  = {cs.CL}
+  primaryClass  = {cs.CL},
+  url       = {https://arxiv.org/abs/2506.15911}
 }
 ```
 
